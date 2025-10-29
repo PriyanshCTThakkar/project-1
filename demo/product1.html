@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Wireless Headphones - TechGear Shop</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../timeline-styles.css">
 </head>
 <body>
     <header>
@@ -209,85 +210,17 @@
         </div>
     </main>
 
-    <!-- Import Activity Tracker and Cart Management -->
     <script src="../activity-tracker.js"></script>
     <script src="cart.js"></script>
     <script>
-        let tracker;
-        document.addEventListener('DOMContentLoaded', () => {
-            tracker = new ActivityTracker();
-            addDebugControls();
-        });
-
-        function addDebugControls() {
-            const debugControls = document.createElement('div');
-            debugControls.className = 'debug-controls';
-            debugControls.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                left: 20px;
-                padding: 10px;
-                background: rgba(0, 0, 0, 0.8);
-                border-radius: 5px;
-                color: white;
-                z-index: 1000;
-            `;
-
-            debugControls.innerHTML = `
-                <div style="margin-bottom: 10px;">Session Debug Controls</div>
-                <button onclick="clearSession()" style="margin-right: 10px; padding: 5px 10px; cursor: pointer;">
-                    Clear Session
-                </button>
-                <button onclick="showSessionInfo()" style="padding: 5px 10px; cursor: pointer;">
-                    Show Session Info
-                </button>
-            `;
-
-            document.body.appendChild(debugControls);
-        }
-
-        function clearSession() {
-            // Clear current session data
-            localStorage.removeItem('activitySession');
-            localStorage.removeItem('activityStats');
-            
-            // Reinitialize the tracker
-            tracker = new ActivityTracker();
-            
-            showNotification('Session cleared successfully');
-        }
-
-        function showSessionInfo() {
-            const sessionData = localStorage.getItem('activitySession');
-            const statsData = localStorage.getItem('activityStats');
-            
-            if (sessionData && statsData) {
-                const session = JSON.parse(sessionData);
-                const stats = JSON.parse(statsData);
-                
-                const info = `
-                    Current Session ID: ${session.id}
-                    Last Activity: ${new Date(session.lastActivity).toLocaleString()}
-                    Activities Count: ${session.activities.length}
-                    Total Sessions: ${stats.sessions.length}
-                `;
-                
-                alert(info);
-            } else {
-                alert('No session data available');
-            }
-        }
-
         function changeImage(src) {
             document.getElementById('main-product-image').src = src;
         }
 
         function switchTab(tabId) {
-            // Remove active class from all tabs
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
             
-            // Add active class to selected tab
             document.querySelector(`.tab-btn[onclick*="${tabId}"]`).classList.add('active');
             document.getElementById(tabId).classList.add('active');
         }
@@ -295,7 +228,7 @@
         function updateQuantity(change) {
             const input = document.getElementById('quantity');
             let value = parseInt(input.value) + change;
-            value = Math.max(1, Math.min(10, value)); // Limit between 1 and 10
+            value = Math.max(1, Math.min(10, value));
             input.value = value;
         }
 

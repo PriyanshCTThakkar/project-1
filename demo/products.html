@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products - TechGear Shop</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../timeline-styles.css">
 </head>
 <body>
     <header>
@@ -47,12 +48,10 @@
         </div>
     </main>
 
-    <!-- Import Activity Tracker and Cart Management -->
     <script src="../activity-tracker.js"></script>
     <script src="cart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const tracker = new ActivityTracker();
             loadProducts();
             setupFilters();
         });
@@ -123,7 +122,7 @@
                         <p class="product-category">${product.category}</p>
                         <div class="product-actions">
                             <a href="product1.html" class="btn btn-secondary">View Details</a>
-                            <button onclick="addToCart(${JSON.stringify(product)})" class="btn btn-primary">
+                            <button onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" class="btn btn-primary">
                                 Add to Cart
                             </button>
                         </div>
@@ -140,14 +139,12 @@
             function applyFilters() {
                 let filtered = [...products];
 
-                // Apply category filter
                 if (categoryFilter.value !== 'all') {
                     filtered = filtered.filter(
                         product => product.category === categoryFilter.value
                     );
                 }
 
-                // Apply sort filter
                 switch (sortFilter.value) {
                     case 'price-low':
                         filtered.sort((a, b) => a.price - b.price);
